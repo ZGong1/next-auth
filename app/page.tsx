@@ -5,7 +5,9 @@ export default async function Home() {
 
   const session = await getServerSession()
 
-  console.log(session)
+  if(!session) {
+    return <p>You must be signed in to access this app</p>
+  }
 
   return (
     <div>

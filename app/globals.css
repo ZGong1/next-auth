@@ -154,7 +154,7 @@ body {
   align-items: center;
   display: grid;
   position: fixed;
-  grid-template-columns: 8fr 2fr;
+  grid-template-columns: 8fr 2.3fr;
   top: 0;
   left: 0;
   right: 0;

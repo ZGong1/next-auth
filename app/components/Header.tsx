@@ -1,4 +1,4 @@
-import { Sign } from "crypto";
+import Link from "next/link";
 import { SignInButton, SignOutButton } from "./Buttons";
 
 const Header = () => {
@@ -6,7 +6,7 @@ const Header = () => {
     <span>
     <div className="header">
       <div className="left-buttons">
-
+        <Link href="/"><button>Home</button></Link>
       </div>
       <div className="right-buttons">
         <SignInButton/>
