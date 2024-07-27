@@ -15,12 +15,14 @@ export function SignInButton() {
   if (status === 'authenticated') {
     return (
       <Link href={`/dashboard`}>
-        <Image
-          src={session.user?.image ?? '/mememan.webp'}
-          width={32}
-          height={32}
-          alt="Your Name"
-        />
+        <div style={{ width: `${40}px`, height: `${40}px`, borderRadius: '50%', overflow: 'hidden',}}>
+          <Image
+            src={session.user?.image ?? '/mememan.webp'}
+            width={40}
+            height={40}
+            alt={session.user?.name || 'session not found'}
+          />
+        </div>
       </Link>
     );
   }
@@ -29,5 +31,10 @@ export function SignInButton() {
 }
 
 export function SignOutButton() {
+
+  const { data: session, status} = useSession()
+
+  if (!session) return;
+
   return <button onClick={() => signOut()}>Sign out</button>;
 }
