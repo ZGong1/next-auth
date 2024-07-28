@@ -7,7 +7,7 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
     <div className="outerNinja">
 
       <div className={`innerLeft ${ninjaData.belt}`}>
-        <img className='image' src={`icons/IconSquare${ninjaData.imgNum}.png`}/>
+        <img className='image' src={`IconSquare${ninjaData.imgNum}.png`}/>
         <p className='ninjaName'>{ninjaData.name}</p>
       </div>
 
