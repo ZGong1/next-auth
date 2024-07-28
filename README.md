@@ -30,3 +30,6 @@ Used for hosting and serving a database server side
 (not tracked but i'm using the most recent version as of 7/20/2024)
 ## Next-auth
 Used for all auth, and lets you sign in through google
+## Tailwind-css
+over half of the project was written before i transitioned from react -> next & tailwind 
+so there is a very ugly mixing of regular css and tailwind
