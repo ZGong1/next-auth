@@ -24,8 +24,9 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 An application to track "ninja bucks" or points that students have
 
-## Libraries used
-# Pocketbase
+# Libraries used
+## Pocketbase
 Used for hosting and serving a database server side
-# Next-auth
+(not tracked but i'm using the most recent version as of 7/20/2024)
+## Next-auth
 Used for all auth, and lets you sign in through google
