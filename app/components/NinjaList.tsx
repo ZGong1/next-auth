@@ -1,8 +1,13 @@
 "use client"
 
-const NinjaList = () => {
+import { NinjaListType } from "../types/pbdb";
+import Ninja from "./Ninja";
+
+const NinjaList = ( { ninjaList }: { ninjaList: NinjaListType } ) => {
   return (
-    <p>Hello empty NinjaList</p>
+    ninjaList.map(ninjaData => {
+      return <Ninja ninjaData={ninjaData}/>
+    })
   );
 }
  

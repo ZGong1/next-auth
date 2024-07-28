@@ -1,8 +1,10 @@
 "use client"
 
-const Ninja = () => {
+import { NinjaType } from "../types/pbdb";
+
+const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
   return (
-    <p>Hello empty ninja component</p>
+    ninjaData.name
   );
 }
  
