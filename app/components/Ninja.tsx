@@ -1,8 +1,19 @@
 "use client"
 
+import { updateNinjas } from "../actions/dbActions";
 import { NinjaType } from "../types/pbdb";
+import { getCurrentDate } from "../utils/utils";
 
 const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
+
+  const onLevelUp = () => {
+    const data = {
+      "bucks": ninjaData.bucks + 5,
+      "llu": getCurrentDate()
+    }
+    updateNinjas(ninjaData.id, data)
+  }
+
   return (
     <div className="outerNinja">
 
@@ -21,7 +32,7 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
         {!ninjaData.ice && <p className='emoji'>❌</p>}
 
         <div>
-          <button className='ninja-button' >Level Up</button>
+          <button className='ninja-button' onClick={onLevelUp}>Level Up</button>
           <button className='ninja-button' >Belt Up</button>
           <button className='ninja-button' >Belt Down</button>
           <button className='ninja-button' >Ice Cream</button>

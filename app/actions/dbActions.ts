@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import PocketBase from 'pocketbase'
 import { NinjaListType, NinjaType } from '../types/pbdb'
+import { revalidatePath } from 'next/cache'
 
 const pb = new PocketBase("http://127.0.0.1:8090")
 
@@ -41,6 +42,7 @@ export async function updateNinjas(id: string, data: any) {
     // Update the ninja record
     const updatedNinja = await pb.collection('ninjas').update(id, data);
 
+    revalidatePath("/")
     return updatedNinja;
   } catch (error) {
     console.error('Error updating ninja:', error);
