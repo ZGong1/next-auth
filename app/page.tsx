@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import React from 'react'
+import NinjaPage from "./components/NinjaPage";
 
 export default async function Home() {
 
@@ -10,8 +11,13 @@ export default async function Home() {
   }
 
   return (
-    <div>
-      Unfinished you need to sign in page
-    </div>
+    <NinjaPage/>
+
+
+    // make this client, + footer component here so search bar can affect  // put it in ninjalist footer
+    // Ninja page (client)
+    //    Ninja list (server)
+    //    top centered (client)
+    // </NinjaPage>
   );
 }

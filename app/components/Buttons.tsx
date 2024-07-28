@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export function SignInButton() {
   const { data: session, status } = useSession();
-  console.log(session, status);
+  // console.log(session, status);
 
   if (status === 'loading') {
     return <>...</>;
@@ -31,7 +31,6 @@ export function SignInButton() {
 }
 
 export function SignOutButton() {
-
   const { data: session, status} = useSession()
 
   if (!session) return;
