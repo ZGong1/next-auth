@@ -64,7 +64,7 @@ export async function deleteNinja(id: string) {
       throw new Error("Unauthorized: you can't delete other center's ninjas")
     }
 
-    await pb.collection("users").delete(id)
+    await pb.collection("ninjas").delete(id)
 
     revalidatePath("/")
 

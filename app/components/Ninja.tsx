@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { updateNinjas } from "../actions/dbActions";
+import { updateNinjas, deleteNinja } from "../actions/dbActions";
 import { NinjaType } from "../types/pbdb";
 import { getCurrentDate, nextBelt, prevBelt } from "../utils/utils";
 
@@ -58,6 +58,10 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
     }
   }
 
+  const onDeleteNinja = () => {
+    deleteNinja(ninjaData.id)
+  }
+
   return (
     <div className="outerNinja">
 
@@ -90,7 +94,7 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
 
       <div>
         <button className="editButton" onClick={editNinja}>✏️</button>
-        {editing && <button className="editButton">❌</button>}
+        {editing && <button className="editButton" onClick={onDeleteNinja}>❌</button>}
       </div>
 
     </div>
