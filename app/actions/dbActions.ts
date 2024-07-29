@@ -49,3 +49,27 @@ export async function updateNinjas(id: string, data: any) {
     throw error;
   }
 }
+
+export async function deleteNinja(id: string) {
+  try {
+    const session = await getServerSession()
+
+    if (!session || !session.user?.email) {
+      throw new Error("Unauthorized: No valid session found")
+    }
+
+    const ninja = await pb.collection("ninjas").getOne(id) as NinjaType
+
+    if (ninja.center !== session.user.email) {
+      throw new Error("Unauthorized: you can't delete other center's ninjas")
+    }
+
+    await pb.collection("users").delete(id)
+
+    revalidatePath("/")
+
+  } catch (e) {
+    console.error("Error deleting ninja: ", e)
+    throw e
+  }
+}
