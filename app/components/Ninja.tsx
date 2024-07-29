@@ -1,10 +1,14 @@
 "use client"
 
+import { useState } from "react";
 import { updateNinjas } from "../actions/dbActions";
 import { NinjaType } from "../types/pbdb";
 import { getCurrentDate, nextBelt, prevBelt } from "../utils/utils";
 
 const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
+
+  const [editing, setEditing] = useState(false)
+  const [editValue, setEditValue] = useState(0)
 
   const onLevelUp = () => {
     const data = {
@@ -41,6 +45,19 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
     updateNinjas(ninjaData.id, data)
   }
 
+  const editNinja = () => {
+    if (editing) {
+      setEditing(false)
+      const data = {
+        "bucks": editValue
+      }
+      updateNinjas(ninjaData.id, data)
+    } else {
+      setEditing(true)
+      setEditValue(ninjaData.bucks)
+    }
+  }
+
   return (
     <div className="outerNinja">
 
@@ -51,7 +68,11 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
 
       <div className='ninjaData'>
 
-        <p>Ninja Bucks: {ninjaData.bucks}</p> <br/>
+        <p>Ninja Bucks: 
+          {!editing && ninjaData.bucks}
+           {editing && <input type='number' value={editValue} onChange={e => setEditValue(Number(e.target.value))}/>}
+        </p> 
+        <br/>
 
         Last Level Up: {ninjaData.llu}<br/>
 
@@ -68,8 +89,8 @@ const Ninja = ( { ninjaData }: {ninjaData: NinjaType}) => {
       </div>
 
       <div>
-        <button className="editButton">✏️</button>
-        <button className="editButton">❌</button>
+        <button className="editButton" onClick={editNinja}>✏️</button>
+        {editing && <button className="editButton">❌</button>}
       </div>
 
     </div>
