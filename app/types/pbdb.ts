@@ -1,5 +1,3 @@
-import { RecordModel } from "pocketbase";
-
 export interface NinjaType {
     belt: string;
     bucks: number;
