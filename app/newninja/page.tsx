@@ -31,7 +31,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="h-1/2 bg-gray-100 flex items-center justify-center my-10">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
         <h1 className="text-2xl font-bold mb-6 text-center text-indigo-600">Enter New Ninja's Info</h1>
         <div className="mb-4">
