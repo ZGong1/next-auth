@@ -6,7 +6,8 @@ const Header = () => {
     <span>
     <div className="header">
       <div className="left-buttons">
-        <Link href="/"><button>Home</button></Link>
+      <Link href="/"><button>Home</button></Link>
+      <Link href="/newninja"><button>Create Ninja</button></Link>
       </div>
       <div className="right-buttons">
         <SignInButton/>
