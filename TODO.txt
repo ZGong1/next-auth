@@ -1,0 +1,9 @@
+add sweetalert2
+make only 2 ninjas show side by side when screen is smaller
+conditional nav buttons
+better not signed in screen
+auth check on /newNinja
+middleware? (always redirect to dedicated login page when no session so no validation is needed?)
+
+*******************************************
+*******************************************
