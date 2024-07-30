@@ -73,3 +73,30 @@ export async function deleteNinja(id: string) {
     throw e
   }
 }
+
+export async function createNinja(name: string, bucks: number) {
+  try {
+    const session = await getServerSession()
+
+    if (!session || !session.user?.email) {
+      throw new Error("Unauthorized: you can't delete other center's ninjas")
+    }
+
+    const data = {
+      "name": name,
+      "belt": "white",
+      "bucks": bucks,
+      "center": session.user.email,
+      "ice": true,
+      "imgNum": Math.floor(Math.random() * 20),
+      "llu": "N/A",
+    }
+
+    await pb.collection("ninjas").create(data)
+    revalidatePath("/")
+
+  } catch (e) {
+    console.error("Error in createNinja server action: \n", e)
+    throw e
+  }
+}
