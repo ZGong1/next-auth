@@ -5,6 +5,7 @@ better not signed in screen
 auth check on /newNinja
 middleware? (always redirect to dedicated login page when no session so no validation is needed?)
 force ninja names to start with a capital letter
+ice cream reset
 
 *******************************************
 *******************************************
