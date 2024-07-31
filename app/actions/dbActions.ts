@@ -79,7 +79,7 @@ export async function createNinja(name: string, bucks: number) {
     const session = await getServerSession()
 
     if (!session || !session.user?.email) {
-      throw new Error("Unauthorized: you can't delete other center's ninjas")
+      throw new Error("Unauthorized: you have to be signed in to create a ninja profile")
     }
 
     const data = {
