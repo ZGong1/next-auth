@@ -4,8 +4,20 @@
 
 import { useState } from "react";
 import { createNinja } from "../actions/dbActions";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Home = () => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <></>
+  }
+
+  if (status === "unauthenticated") {
+    return redirect("/")
+  }
+
   const [name, setName] = useState("")
   const [bucks, setBucks] = useState(0)
   const [error, setError] = useState("")
