@@ -8,6 +8,42 @@ import { revalidatePath } from 'next/cache'
 
 const pb = new PocketBase("http://127.0.0.1:8090")
 
+async function LIRReset(email: string) {
+  const cancelKey = 'updateNinjasIceFieldAndLIR' + Date.now();
+
+
+  try {
+      // Fetch all records from the "ninjas" collection
+      const records = await pb.collection('ninjas').getFullList({
+        filter: `center = "${email}"`,
+        $cancelKey: cancelKey
+      });
+      console.log(records)
+
+      // Update each record
+      for (const record of records) {
+        await pb.collection('ninjas').update(record.id, {
+            ice: true
+        }, {
+            $cancelKey: cancelKey
+        });
+    }
+
+
+        // Update the LIR field in the "config" collection
+        const currentDate = new Date().toISOString();
+        const configRecord = await pb.collection('config').getFirstListItem(`email="${email}"`);
+        
+        await pb.collection('config').update(configRecord.id, {
+            LIR: currentDate
+        });
+
+      console.log('All "ice" fields updated successfully')
+  } catch (error) {
+      console.error('Error updating records:', error);
+  }
+}
+
 async function createDefaultConfig(email: string): Promise<UserConfig> {
   const now = new Date().toISOString()
   const newConfig = {
@@ -17,7 +53,6 @@ async function createDefaultConfig(email: string): Promise<UserConfig> {
 
   try {
     const createdConfig = await pb.collection("config").create(newConfig)
-    console.log("Created default config:", createdConfig)
     return newConfig
   } catch (error) {
     console.error("Error creating default config:", error)
@@ -29,15 +64,16 @@ export async function getNinjas(): Promise<NinjaListType> {
   // check if valid session
   const session = await getServerSession()
   if (!session) redirect("/")
-  
-  // console.log(session.user?.email)
 
   // get config and LIR reset if required
   try {
     const userConfig = await pb.collection("config").getFirstListItem(`email="${session.user?.email}"`) as UserConfig
     const lastReset = userConfig.LIR.slice(5, 7)
     const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
-    console.log("userConfig: ", currentMonth)
+    if (lastReset != currentMonth) {
+      await LIRReset(session.user?.email!)
+      revalidatePath("/")
+    }
   } catch (error) {
     createDefaultConfig(session.user?.email!)
   } 
@@ -49,7 +85,6 @@ export async function getNinjas(): Promise<NinjaListType> {
   }) as NinjaListType
 
   return results
-  // console.log(results)
 }
 
 export async function updateNinjas(id: string, data: any) {
