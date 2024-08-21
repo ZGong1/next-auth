@@ -5,7 +5,7 @@ better not signed in screen
 auth check on /newNinja
 middleware? (always redirect to dedicated login page when no session so no validation is needed?)
 force ninja names to start with a capital letter
-ice cream reset
+ice cream reset || config table that stores LIR for each email -> on every fetch, check if month has changed -> also check if config is initialized for first time users
 
 *******************************************
 *******************************************
