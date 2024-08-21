@@ -14,3 +14,8 @@ export interface NinjaType {
 }
   
 export type NinjaListType = NinjaType[];
+
+export interface UserConfig {
+    email: string
+    LIR: string // PocketBase DateTime as string
+  }

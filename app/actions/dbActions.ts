@@ -3,16 +3,46 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import PocketBase from 'pocketbase'
-import { NinjaListType, NinjaType } from '../types/pbdb'
+import { NinjaListType, NinjaType, UserConfig } from '../types/pbdb'
 import { revalidatePath } from 'next/cache'
 
 const pb = new PocketBase("http://127.0.0.1:8090")
 
-export async function getNinjas(): Promise<NinjaListType> {
-  const session = await getServerSession()
-  // console.log("server action session: ", session)
-  if (!session) redirect("/")
+async function createDefaultConfig(email: string): Promise<UserConfig> {
+  const now = new Date().toISOString()
+  const newConfig = {
+    email: email,
+    LIR: now
+  }
 
+  try {
+    const createdConfig = await pb.collection("config").create(newConfig)
+    console.log("Created default config:", createdConfig)
+    return newConfig
+  } catch (error) {
+    console.error("Error creating default config:", error)
+    throw error
+  }
+}
+
+export async function getNinjas(): Promise<NinjaListType> {
+  // check if valid session
+  const session = await getServerSession()
+  if (!session) redirect("/")
+  
+  // console.log(session.user?.email)
+
+  // get config and LIR reset if required
+  try {
+    const userConfig = await pb.collection("config").getFirstListItem(`email="${session.user?.email}"`) as UserConfig
+    const lastReset = userConfig.LIR.slice(5, 7)
+    const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    console.log("userConfig: ", currentMonth)
+  } catch (error) {
+    createDefaultConfig(session.user?.email!)
+  } 
+
+  // get list of ninjas
   const results = await pb.collection("ninjas").getFullList({
     sort: 'name',
     filter: `center = "${session.user?.email}"`
